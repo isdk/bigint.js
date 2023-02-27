@@ -6,6 +6,7 @@ specifiers:
   bn.js: ^5.2.1
   bumpp: ^9.0.0
   eslint: ^8.35.0
+  eslint-config-prettier: ^8.6.0
   eslint-plugin-tsdoc: ^0.2.17
   prettier: ^2.8.4
   tsup: ^6.6.3
@@ -23,6 +24,7 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 5.53.0_cjo54hduev4bqhpjw5znwiokqu
   bumpp: 9.0.0
   eslint: 8.35.0
+  eslint-config-prettier: 8.6.0_eslint@8.35.0
   eslint-plugin-tsdoc: 0.2.17
   prettier: 2.8.4
   tsup: 6.6.3_typescript@4.9.5
@@ -1434,6 +1436,15 @@ packages:
   /escape-string-regexp/4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
+    dev: true
+
+  /eslint-config-prettier/8.6.0_eslint@8.35.0:
+    resolution: {integrity: sha512-bAF0eLpLVqP5oEVUFKpMA+NnRFICwn9X8B5jrR9FcqnYBuPbqWEjTEspPWMj5ye6czoSLDweCzSo3Ko7gGrZaA==}
+    hasBin: true
+    peerDependencies:
+      eslint: '>=7.0.0'
+    dependencies:
+      eslint: 8.35.0
     dev: true
 
   /eslint-import-resolver-node/0.3.7:
