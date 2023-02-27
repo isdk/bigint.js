@@ -1,0 +1,23 @@
+{
+  "cSpell.words": [
+    "addn",
+    "egcd",
+    "iadd",
+    "iaddn",
+    "iinc",
+    "ileft",
+    "imod",
+    "invm",
+    "iright",
+    "ishln",
+    "ishrn",
+    "isubn",
+    "iumod",
+    "shln",
+    "shrn",
+    "subn",
+    "testn",
+    "umod"
+  ],
+  "testing.automaticallyOpenPeekView": "never"
+}
