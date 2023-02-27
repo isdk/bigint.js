@@ -6,6 +6,8 @@ import BN from 'bn.js'
  */
 
 BN.prototype.equal = BN.prototype.eq
+BN.prototype.isNegative = BN.prototype.isNeg
+
 BN.prototype.iinc = function (n = 1) {
   return this.iaddn(n)
 }
@@ -52,10 +54,6 @@ BN.prototype.modInv = function (n: BN) {
 
 BN.prototype.isOne = function () {
   return this.eqn(1)
-}
-
-BN.prototype.isNegative = function () {
-  return this.isNeg()
 }
 
 BN.prototype.ileftShift = function (x: number | BN) {
