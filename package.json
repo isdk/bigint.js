@@ -30,11 +30,12 @@
   "types": "./dist/index.d.ts",
   "files": [
     "src",
+    "docs",
     "dist"
   ],
   "scripts": {
     "build-fast": "tsup src/index.ts --format cjs,esm",
-    "build": "pnpm run build-fast --dts-resolve --dts",
+    "build": "pnpm run build-fast --dts-resolve --dts && pnpm run doc:md",
     "doc": "typedoc --plugin none --out web",
     "doc:md": "typedoc --plugin typedoc-plugin-markdown --out docs",
     "style": "pnpm run format -c && pnpm run lint",
