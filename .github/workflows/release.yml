@@ -11,7 +11,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
+        with:
+          cache: 'pnpm'
       - name: Install pnpm
         run: npm i -g pnpm
       - name: Install deps
@@ -35,7 +40,7 @@ jobs:
           keep_files: true
       - name: Publish to npm
         run: |
-          npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
-          npm publish --ignore-scripts
+          pnpm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+          pnpm publish --access public
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
