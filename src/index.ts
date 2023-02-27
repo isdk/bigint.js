@@ -1,5 +1,5 @@
 import BigInteger from './native'
-import { IBigInt } from './IBigint'
+import type { IBigInt } from './IBigint'
 export * from './IBigint'
 
 const detectBigInt = () => typeof BigInt !== 'undefined'
