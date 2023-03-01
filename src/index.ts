@@ -1,16 +1,27 @@
-import BigInteger from './native'
-import type { IBigInt } from './IBigint'
+export * from './native'
 export * from './IBigint'
+export * from './bn'
 
-const detectBigInt = () => typeof BigInt !== 'undefined'
+import { BigIntNative } from './native'
+import { BN } from './bn'
+import type { IBigInt } from './IBigint'
 
-async function getBigInteger() {
-  if (detectBigInt()) {
-    return BigInteger as unknown as IBigInt
-  } else {
-    const { default: BigInteger } = await import('./bn')
-    return BigInteger as unknown as IBigInt
-  }
+/**
+ * detect whether the native BigInt implementation exists
+ */
+export function detectBigInt() {
+  return typeof BigInt !== 'undefined'
 }
 
-export { getBigInteger }
+/**
+ * return the native or pure js BigInt Class base on the platform
+ * @returns the IBigInt Class
+ */
+export async function getBigInteger() {
+  if (detectBigInt()) {
+    return BigIntNative as unknown as IBigInt
+  } else {
+    // const { default: BigInteger } = await import('./bn')
+    return BN as unknown as IBigInt
+  }
+}

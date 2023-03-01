@@ -6,7 +6,7 @@ import type { IBigInt } from './IBigint'
  * Operations are not constant time,
  * but we try and limit timing leakage where we can
  */
-export default class BigInteger implements IBigInt {
+export class BigIntNative implements IBigInt {
   value: bigint
   /**
    * Get a BigInteger (input must be big endian for strings and arrays)
@@ -32,7 +32,7 @@ export default class BigInteger implements IBigInt {
   }
 
   clone() {
-    return new BigInteger(this.value)
+    return new BigIntNative(this.value)
   }
 
   iinc(n = 1) {
@@ -65,68 +65,68 @@ export default class BigInteger implements IBigInt {
 
   /**
    * BigInteger addition in place
-   * @param {BigInteger} x - Value to add
+   * @param {BigIntNative} x - Value to add
    */
-  iadd(x: BigInteger) {
+  iadd(x: BigIntNative) {
     this.value += x.value
     return this
   }
 
   /**
    * BigInteger addition
-   * @param {BigInteger} x - Value to add
-   * @returns {BigInteger} this + x.
+   * @param {BigIntNative} x - Value to add
+   * @returns {BigIntNative} this + x.
    */
-  add(x: BigInteger) {
+  add(x: BigIntNative) {
     return this.clone().iadd(x)
   }
 
   /**
    * BigInteger subtraction in place
-   * @param {BigInteger} x - Value to subtract
+   * @param {BigIntNative} x - Value to subtract
    */
-  isub(x: BigInteger) {
+  isub(x: BigIntNative) {
     this.value -= x.value
     return this
   }
 
   /**
    * BigInteger subtraction
-   * @param {BigInteger} x - Value to subtract
-   * @returns {BigInteger} this - x.
+   * @param {BigIntNative} x - Value to subtract
+   * @returns {BigIntNative} this - x.
    */
-  sub(x: BigInteger) {
+  sub(x: BigIntNative) {
     return this.clone().isub(x)
   }
 
   /**
    * BigInteger multiplication in place
-   * @param {BigInteger} x - Value to multiply
+   * @param {BigIntNative} x - Value to multiply
    */
-  imul(x: BigInteger) {
+  imul(x: BigIntNative) {
     this.value *= x.value
     return this
   }
 
   /**
    * BigInteger multiplication
-   * @param {BigInteger} x - Value to multiply
-   * @returns {BigInteger} this * x.
+   * @param {BigIntNative} x - Value to multiply
+   * @returns {BigIntNative} this * x.
    */
-  mul(x: BigInteger) {
+  mul(x: BigIntNative) {
     return this.clone().imul(x)
   }
 
-  imod(m: BigInteger) {
+  imod(m: BigIntNative) {
     this.value %= m.value
     return this
   }
 
   /**
    * Compute value modulo m, in place
-   * @param {BigInteger} m - Modulo
+   * @param {BigIntNative} m - Modulo
    */
-  iumod(m: BigInteger) {
+  iumod(m: BigIntNative) {
     this.value %= m.value
     if (this.isNegative()) {
       this.iadd(m)
@@ -137,28 +137,28 @@ export default class BigInteger implements IBigInt {
 
   /**
    * Compute value modulo m
-   * @param {BigInteger} m - Modulo
-   * @returns {BigInteger} this mod m.
+   * @param {BigIntNative} m - Modulo
+   * @returns {BigIntNative} this mod m.
    */
-  umod(m: BigInteger) {
+  umod(m: BigIntNative) {
     return this.clone().iumod(m)
   }
 
   /**
    * Compute value modulo m
-   * @param {BigInteger} m - Modulo
-   * @returns {BigInteger} this mod m.
+   * @param {BigIntNative} m - Modulo
+   * @returns {BigIntNative} this mod m.
    */
-  mod(m: BigInteger) {
+  mod(m: BigIntNative) {
     return this.clone().imod(m)
   }
 
-  modExp(e: BigInteger, n: BigInteger) {
+  modExp(e: BigIntNative, n: BigIntNative) {
     if (n.isZero()) {
       throw new Error('Modulo cannot be zero')
     }
     if (n.isOne()) {
-      return new BigInteger(0)
+      return new BigIntNative(0)
     }
     if (e.isNegative()) {
       throw new Error('Unsupported negative exponent')
@@ -178,24 +178,24 @@ export default class BigInteger implements IBigInt {
       r = lsb ? rx : r
       x = (x * x) % n.value // Square
     }
-    return new BigInteger(r)
+    return new BigIntNative(r)
   }
 
   /**
    * Compute the inverse of this value modulo n
    * Note: this and and n must be relatively prime
-   * @param {BigInteger} n - Modulo
-   * @returns {BigInteger} x such that this*x = 1 mod n
+   * @param {BigIntNative} n - Modulo
+   * @returns {BigIntNative} x such that this*x = 1 mod n
    * @throws {Error} if the inverse does not exist
    */
-  modInv(n: BigInteger) {
+  modInv(n: BigIntNative) {
     const _n = n.value
     const { gcd, x } = this.__egcd(_n)
     if (gcd !== BigInt(1)) {
       throw new Error('Inverse does not exist')
     }
 
-    return new BigInteger((x + _n) % _n)
+    return new BigIntNative((x + _n) % _n)
   }
 
   __egcd(b: bigint) {
@@ -228,23 +228,23 @@ export default class BigInteger implements IBigInt {
   /**
    * Extended Eucleadian algorithm (http://anh.cs.luc.edu/331/notes/xgcd.pdf)
    * Given a = this and b, compute (x, y) such that ax + by = gdc(a, b)
-   * @param {BigInteger} b - Second operand
-   * @returns {{ gcd, x, y: BigInteger }}
+   * @param {BigIntNative} b - Second operand
+   * @returns {{ gcd, x, y: BigIntNative }}
    */
   _egcd(b: any) {
     const { x, y, gcd } = this.__egcd(b.value)
 
     return {
-      x: new BigInteger(x),
-      y: new BigInteger(y),
-      gcd: new BigInteger(gcd),
+      x: new BigIntNative(x),
+      y: new BigIntNative(y),
+      gcd: new BigIntNative(gcd),
     }
   }
 
   /**
    * Compute greatest common divisor between this and n
-   * @param {BigInteger} b - Operand
-   * @returns {BigInteger} gcd
+   * @param {BigIntNative} b - Operand
+   * @returns {BigIntNative} gcd
    */
   gcd(b: any) {
     let a = this.value
@@ -254,87 +254,87 @@ export default class BigInteger implements IBigInt {
       b = a % b
       a = tmp
     }
-    return new BigInteger(a)
+    return new BigIntNative(a)
   }
 
   /**
    * Shift this to the left by x, in place
-   * @param {BigInteger} x - Shift value
+   * @param {BigIntNative} x - Shift value
    */
-  ileftShift(x: BigInteger) {
+  ileftShift(x: BigIntNative) {
     this.value <<= x.value
     return this
   }
 
   /**
    * Shift this to the left by x
-   * @param {BigInteger} x - Shift value
-   * @returns {BigInteger} this << x.
+   * @param {BigIntNative} x - Shift value
+   * @returns {BigIntNative} this << x.
    */
-  leftShift(x: BigInteger) {
+  leftShift(x: BigIntNative) {
     return this.clone().ileftShift(x)
   }
 
   /**
    * Shift this to the right by x, in place
-   * @param {BigInteger} x - Shift value
+   * @param {BigIntNative} x - Shift value
    */
-  irightShift(x: BigInteger) {
+  irightShift(x: BigIntNative) {
     this.value >>= x.value
     return this
   }
 
   /**
    * Shift this to the right by x
-   * @param {BigInteger} x - Shift value
-   * @returns {BigInteger} this >> x.
+   * @param {BigIntNative} x - Shift value
+   * @returns {BigIntNative} this >> x.
    */
-  rightShift(x: BigInteger) {
+  rightShift(x: BigIntNative) {
     return this.clone().irightShift(x)
   }
 
   /**
    * Whether this value is equal to x
-   * @param {BigInteger} x
+   * @param {BigIntNative} x
    * @returns {Boolean}
    */
-  equal(x: BigInteger) {
+  equal(x: BigIntNative) {
     return this.value === x.value
   }
 
   /**
    * Whether this value is less than x
-   * @param {BigInteger} x
+   * @param {BigIntNative} x
    * @returns {Boolean}
    */
-  lt(x: BigInteger) {
+  lt(x: BigIntNative) {
     return this.value < x.value
   }
 
   /**
    * Whether this value is less than or equal to x
-   * @param {BigInteger} x
+   * @param {BigIntNative} x
    * @returns {Boolean}
    */
-  lte(x: BigInteger) {
+  lte(x: BigIntNative) {
     return this.value <= x.value
   }
 
   /**
    * Whether this value is greater than x
-   * @param {BigInteger} x
+   * @param {BigIntNative} x
    * @returns {Boolean}
    */
-  gt(x: BigInteger) {
+  gt(x: BigIntNative) {
     return this.value > x.value
   }
 
   /**
    * Whether this value is greater than or equal to x
-   * @param {BigInteger} x
+   * @param {BigIntNative} x
    * @returns {Boolean}
    */
-  gte(x: BigInteger) {
+  gte(x: BigIntNative) {
     return this.value >= x.value
   }
 
@@ -422,11 +422,11 @@ export default class BigInteger implements IBigInt {
    * @returns {Number} Byte length.
    */
   byteLength() {
-    const zero = new BigInteger(0)
-    const negOne = new BigInteger(-1)
+    const zero = new BigIntNative(0)
+    const negOne = new BigIntNative(-1)
 
     const target = this.isNegative() ? negOne : zero
-    const eight = new BigInteger(8)
+    const eight = new BigIntNative(8)
     let len = 1
     const tmp = this.clone()
     while (!tmp.irightShift(eight).equal(target)) {

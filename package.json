@@ -4,7 +4,7 @@
   "packageManager": "pnpm@7.27.1",
   "description": "The BigInteger class wrapped bn.js and native BitInt",
   "author": "Riceball LEE <snowyu.lee@gmail.com>",
-  "license": "LGPL-3.0+",
+  "license": "MIT",
   "homepage": "https://github.com/isdk/bigint.js/#readme",
   "bug": "https://github.com/isdk/bigint.js/issues",
   "publishConfig": {
@@ -34,7 +34,7 @@
     "dist"
   ],
   "scripts": {
-    "build-fast": "tsup src/index.ts --format cjs,esm",
+    "build-fast": "tsup",
     "build": "pnpm run build-fast --dts-resolve --dts && pnpm run doc:md",
     "doc": "typedoc --plugin none --out web",
     "doc:md": "typedoc --plugin typedoc-plugin-markdown --out docs",
