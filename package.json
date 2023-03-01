@@ -1,6 +1,6 @@
 {
   "name": "@isdk/bigint",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "packageManager": "pnpm@7.27.1",
   "description": "The BigInteger class wrapped bn.js and native BitInt",
   "author": "Riceball LEE <snowyu.lee@gmail.com>",
