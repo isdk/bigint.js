@@ -1,8 +1,12 @@
-## @isdk/bigint
+## BigInt
 
 The BigInt Package provides a unified interface for performing large integer operations, which are fundamental to implementing cryptographic algorithms. The library wraps the `bn.js` library and native `BigInt` class. If native `BigInt` is available, it'll use it first. This enables users to take advantage of the best available implementation on their platform for improved performance.
 
-The operator method prefix `i`: perform operation in-place, storing the result in the host object (on which the method was invoked). Might be used to avoid number allocation costs. eg,
+The Operator Method Prefixes
+
+* `i`: perform operation in-place, storing the result in the host object (on which the method was invoked). Might be used to avoid number allocation costs. eg,
+
+### Examples
 
 ```typescript
 import BigInteger from '@isdk/bigint'
@@ -12,6 +16,16 @@ const b = new BigInteger(6)
 a.iadd(b)
 console.log(a.toString()) // prints "15"
 ```
+
+### Installation
+
+```bash
+npm i @isdk/bigint
+```
+
+### API Reference
+
+See Also: [isdk.github.io/bigint.js/](https://isdk.github.io/bigint.js/)
 
 ## Credit
 
