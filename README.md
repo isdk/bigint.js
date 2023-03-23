@@ -1,4 +1,4 @@
-## BigInt
+## BigInt(@isdk/bigint)
 
 The BigInt Package provides a unified interface for performing large integer operations, which are fundamental to implementing cryptographic algorithms. The library wraps the `bn.js` library and native `BigInt` class. If native `BigInt` is available, it'll use it first. This enables users to take advantage of the best available implementation on their platform for improved performance.
 
