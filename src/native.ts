@@ -20,7 +20,7 @@ export class BigIntNative implements IBigInt {
 
     if (n instanceof Uint8Array) {
       const bytes = n
-      const hex = new Array(bytes.length)
+      const hex = Array(bytes.length)
       for (let i = 0; i < bytes.length; i++) {
         const hexByte = bytes[i].toString(16)
         hex[i] = bytes[i] <= 0xf ? `0${hexByte}` : hexByte

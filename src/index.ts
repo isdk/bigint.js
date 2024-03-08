@@ -1,10 +1,10 @@
-export * from './native'
-export * from './IBigint'
-export * from './bn'
-
 import { BigIntNative } from './native'
 import { BN } from './bn'
 import type { IBigInt } from './IBigint'
+
+export * from './native'
+export * from './IBigint'
+export * from './bn'
 
 /**
  * detect whether the native BigInt implementation exists
